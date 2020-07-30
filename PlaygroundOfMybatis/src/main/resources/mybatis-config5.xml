@@ -16,5 +16,7 @@
 
     <mappers>
         <mapper class="com.yhh.playground.mybatis.dao.UserMapper5"/>
+        <mapper class="com.yhh.playground.mybatis.dao.OrderMapper5"/>
+        <mapper class="com.yhh.playground.mybatis.dao.RoleMapper5"/>
     </mappers>
 </configuration>
