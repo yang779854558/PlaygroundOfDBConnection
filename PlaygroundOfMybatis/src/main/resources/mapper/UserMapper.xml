@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  本配置文件用于配合 mybatis-config.xml 讲解各配置项  -->
+<mapper namespace="user">
+    <!-- namespace 命名空间，与 id 组成 sql 的唯一标识 -->
+    <!--  以下为 SQL 片段
+        parameterType
+        resultType
+    -->
+
+<!--  user 为 mybatis-config.xml 中定义的别名  -->
+    <insert id="insert" parameterType="user">
+        insert into user
+        values (#{id}, #{username}, #{password})
+    </insert>
+
+    <delete id="deleteById">
+        delete
+        from user
+        where id = #{id}
+    </delete>
+
+    <update id="updateById" parameterType="user">
+        update user
+        set username = #{username},
+            password = #{password}
+        where id = #{id}
+    </update>
+
+    <select id="selectAll" resultType="user">
+        select *
+        from user
+    </select>
+
+    <select id="selectOneById" resultType="user">
+        select *
+        from user
+        where id = #{id};
+    </select>
+</mapper>

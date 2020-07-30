@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--  本配置文件用于讲解各配置项
+    configuration 中各标签必须按照下面顺序排列
+    properties
+    settings
+    typeAliases
+    typeHandlers
+    objectFactory
+    plugins
+    environments
+    databaseIdProvider
+    mappers
+-->
+<configuration>
+
+    <properties resource="jdbc.properties"/>
+
+    <!--  给 Java 对象取别名，在 mapper.xml 中可以使用别名来表示类型
+        mybatis 默认给出了如下别名
+        java.lang.String -> string
+        java.lang.Long -> long
+        java.lang.Integer -> int
+        java.lang.Double ->double
+        java.lang.Boolean -> boolean
+        ......
+    -->
+    <typeAliases>
+        <!--    给单独的实体类取别名    -->
+        <typeAlias type="com.yhh.playground.mybatis.entity.User" alias="User"/>
+        <!--    给指定包下所有类取别名，别名不区分大小写    -->
+        <package name="com.yhh.playground.mybatis.entity"/>
+    </typeAliases>
+
+    <!--  运行环境, 可以设置多个运行环境，default 指定默认的运行环境  -->
+    <environments default="dev">
+        <environment id="dev">
+            <!-- 事务由 JDBC 管理 -->
+            <transactionManager type="JDBC"/>
+            <!-- 连接池信息
+                UNPOOLED : 每次请求时打开和关闭 JDBC 连接
+                POOLED : 由连接池管理 JDBC 连接
+            -->
+            <dataSource type="POOLED">
+                <!-- 使用 properties 中的属性 -->
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+        <environment id="test">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="org.sqlite.JDBC"/>
+                <property name="url" value="jdbc:sqlite:test.db"/>
+                <property name="username" value="root"/>
+                <property name="password" value="root"/>
+            </dataSource>
+        </environment>
+        <environment id="production">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="org.sqlite.JDBC"/>
+                <property name="url" value="jdbc:sqlite:test.db"/>
+                <property name="username" value="root"/>
+                <property name="password" value="root"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--  引入映射配置文件  -->
+    <mappers>
+        <!--  引入配置一个 mapper.xml -->
+        <mapper resource="mapper/UserMapper.xml"/>
+        <!--  根据类名引入 mapper.xml -->
+        <mapper class="com.yhh.playground.mybatis.dao.UserMapper2"/>
+        <!--  根据包名引入包内所有 mapper.xml  -->
+        <package name="com.yhh.playground.mybatis.dao"/>
+    </mappers>
+</configuration>
